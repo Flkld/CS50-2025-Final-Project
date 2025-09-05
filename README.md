@@ -1,8 +1,8 @@
 # Library
 
-#### Video Demo:
+#### Video Demo: 
 https://youtu.be/p5iQEdql9d4
-
+(Recorded in Spanish)
 #### Description
 
 My project is a reading tracker application that allows users to manage their personal library.  
