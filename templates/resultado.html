@@ -1,0 +1,57 @@
+{% extends 'layout.html' %}
+{% block title %}Inicio{% endblock %}
+{% block content %}
+{% if resultados %}
+  <div class='container mt-4'>
+  <h2 class='text-center'>
+    Resultados para 
+    <span class='badge bg-primary'>“{{ consulta }}”</span>
+  </h2>
+    <div class='table-responsive mt-4'>
+      <table class='table table-striped table-hover align-middle shadow-sm'>
+        <thead class='table-dark'>
+          <tr>
+            <th>Título</th>
+            <th>Autor(es)</th>
+            <th>Editorial</th>
+            <th>Categoría</th>
+            <th>ISBN</th>
+            <th class='text-nowrap'>Fecha de publicación</th>
+            <th>Acción</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for libro in resultados %}
+          <tr>
+            <td>
+            <button type='button' class='btn btn-primary position-relative' style='pointer-events: none;'>
+                {{ libro.titulo }}
+            <span class='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger'>
+                  {{ libro.paginas }} páginas
+            <span class='visually-hidden'>Número de páginas</span>
+            </span>
+            </button>
+            </td> 
+            <td>{{ libro.autor }}</td>
+            <td>{{ libro.editorial }}</td>
+            <td><span class='badge bg-info text-dark'>{{ libro.generos }}</span></td>
+            <td><code>{{ libro.isbn13 }}</code></td>
+            <td><small class='text-nowrap'>{{ libro.anio }}</small></td>
+            <td>
+              <form action='/nuevo_libro' method='post' class='d-inline'>
+                <input type='hidden' name='libro' value='{{ libro | tojson | safe }}'>
+                <button class='btn btn-sm btn-success' type='submit'>
+                  <i class='bi bi-plus-circle'>Añadir</i> 
+                </button>
+              </form>
+            </td>
+          </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  </div>
+  </div>
+  {% else %}
+    <div class='alert alert-info mt-3'>No se encuentra “{{ consulta }}”.</div>
+  {% endif %}
+{% endblock %}

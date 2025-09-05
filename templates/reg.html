@@ -1,0 +1,36 @@
+{% extends 'layout.html' %}
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<div class='container py-5'>
+  <div class='row justify-content-center'>
+    <div class='col-md-6'>
+      <div class='card shadow-sm'>
+        <div class='card-body'>
+          <h3 class='text-center mb-4'>Registro</h3>
+
+          <form action='/reg' method='POST'><div class='mb-3'><input name='nombre' type='text' class='form-control' placeholder='Nombre' required>
+            </div>
+            <div class='mb-3'><input name='apellidos' type='text' class='form-control' placeholder='Apellidos' required>
+            </div><div class='mb-3'><input name='correo' type='email' class='form-control' placeholder='Correo' required>
+            </div>
+            <div class='mb-3'><input name='edad' type='number' class='form-control' placeholder='Edad' required>
+            </div><div class='mb-3'><input name='password' type='password' class='form-control' placeholder='Contraseña' required>
+            </div>             
+            <div class='d-flex justify-content-center my-3'>
+            <input type='color' name='acento' value='#e66465'>Color de acento
+            </div>
+            <div class='d-grid'>
+            <button type='submit' class='btn btn-primary'>Registro</button>
+            </div>
+          </form>
+
+          <p class='text-center mt-3'><a href='/login'>Inicia sesión</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

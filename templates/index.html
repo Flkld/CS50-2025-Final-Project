@@ -1,0 +1,114 @@
+{% extends 'layout.html' %}
+{% block title %}Inicio{% endblock %}
+{% block content %}
+  {% if nombre %}
+    <div class='celosia  py-3 mb-4 text-center text-white shadow'>
+      <h1 class='mb-0'>Bienvenido, {{ nombre }}</h1>
+    
+    <span class='celosia py-2 mb-4 text-center text-white shadow'>
+      <h3 class='mb-0'>Actualmente estás leyendo:</h3>
+    </div>
+
+    <hr class='border border-info'>
+
+    <div class='d-flex justify-content-center'>
+      <ul class='list-group mx-auto mt-3 lectura-lista'>
+        {% for l in leyendo %}
+          <li class='list-group-item align-items-center rounded-3 mb-3 animated-border'>
+            <div class='d-flex align-items-center p-3 w-100'>
+
+             
+              <div class='d-flex align-items-center'>
+                {% if l.url_portada %}
+                  <img src='{{ l.url_portada }}' alt='portada' style='height:60px' class='me-3 rounded'>
+                {% endif %}
+                <div>
+                  <strong>{{ l.titulo }}</strong><br>
+                  <small class='text-muted'>{{ l.autor }}</small><br>
+                  <span class='badge bg-info'>{{ l.paginas_leidas }} pág</span>
+                  <span class='badge text-bg-warning'>{{ l.tiempo }} min</span>
+                </div>
+              </div>
+              
+             
+              <div class='shadow-sm p-3 bg-fila rounded ms-3 flex-grow-1' style='max-width: 650px;'>
+                <form action='/tiempo/{{ l.id }}' method='post' 
+                      class='d-flex flex-column gap-2 w-100'>
+
+                 
+                  <div class='d-flex flex-wrap align-items-center gap-2'>
+                    <button class='btn btn-outline-primary btn-sm' name='minutos' value='15'>+15</button>
+                    <button class='btn btn-outline-primary btn-sm' name='minutos' value='30'>+30</button>
+                    <button class='btn btn-outline-primary btn-sm' name='minutos' value='60'>+60</button>
+
+                    <div class='input-group input-group-sm flex-grow-1' style='max-width:320px;'>
+                      <input type='number' name='paginas' class='form-control' placeholder='Páginas leídas'>
+                      <button class='btn btn-outline-success' type='submit' name='accion' value='paginas'>
+                        Actualizar
+                      </button>
+                    </div>
+                  </div>
+                  </form>
+                    <hr>
+                    <form action='/tiempo/{{ l.id }}' method='post' >
+                  <div class='d-flex align-items-center flex-wrap gap-2'>
+                    <label class='form-label mb-0'><small>Nota</small></label>
+                    <select name='nota' required class='form-select form-select-sm' style='width:auto; min-width:70px;'>
+                      <option value=''>—</option>
+                      <option value='1'>⭐️</option><option value='2'>⭐️⭐️</option><option value='3'>⭐️⭐️⭐️</option><option value='4'>⭐️⭐️⭐️⭐️</option><option value='5'>⭐️⭐️⭐️⭐️⭐️</option>
+                    </select>
+
+                    <input type='text' name='comentario' required class='form-control form-control-sm flex-grow-1' placeholder='Comentario' style='min-width:180px; max-width:420px; height: max-content;'>
+
+                    <button type='submit' class='btn btn-pink btn-terminar ms-lg-auto' 
+                            name='accion' value='terminar'>
+                      Terminar
+                    </button>
+                  </div>
+
+                </form>
+              </div>
+
+            </div>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+    <div class='mt-5'>
+      <h3 class='text-center'>Leídos</h3>
+      <ul class='list-group mx-auto mt-3 lectura-lista text-center'>
+        {% for l in leidos %}
+          <li class='list-group-item'>
+            {% if l.url_portada %}
+              <img src='{{ l.url_portada }}' alt='portada' style='height:40px' class='me-2 rounded'>
+            {% endif %}
+            <strong>{{ l.titulo }} </strong> –
+            <small>{{ l.autor }} |</small>
+            <small>{{ l.paginas_leidas}} páginas |</small>
+            <span class='badge bg-success ms-2'>{{ l.tiempo }}</span>
+            <small>min | Nota:
+                {% if l.nota== 1 %}
+                ⭐️
+                {% elif l.nota== 2 %}
+                ⭐️⭐️
+                {% elif l.nota== 3 %}
+                ⭐️⭐️⭐️
+                {% elif l.nota== 4 %}
+                ⭐️⭐️⭐️⭐️
+                {% elif l.nota== 5 %}
+                ⭐️⭐️⭐️⭐️⭐️
+                {% else %}
+                '-'
+                {% endif %}
+            </small>
+            {% if l.comentario %}<br><span class='text-muted'>Comentario: {{ l.comentario }}</span>{% endif %}
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+
+  {% else %}
+    <h1>Hola, invitado 👋</h1>
+    <a href='/login'>Iniciar sesión</a>
+  {% endif %}
+{% endblock %}
